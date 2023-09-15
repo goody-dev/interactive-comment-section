@@ -3,7 +3,7 @@ import Rating from './Rating';
 
 const Comment = ({currentUser, id, username, content, createdAt, rating, img}) => {
     return(
-        <div className="bg-white mx-auto max-w-md space-y-3 shadow-lg flex flex-col m-5 rounded p-5">
+        <div className="bg-white mx-auto max-w-[80%] md:max-w-md space-y-3 shadow-lg flex flex-col m-5 rounded p-5">
             <div className='flex w-fit space-x-4 content-center'>
                 <img src={"../assets"+img} />
                 <p>{username}</p>
