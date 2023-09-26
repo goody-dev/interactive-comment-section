@@ -6,8 +6,7 @@ import Data from './data.json';
 import { useState, useReducer } from 'react';
 
 function App() {
-    const [database, dispatch] = useReducer(dataReducer, Data);
-    //const [content, setContent] = useState(null);
+    const [commentbase, dispatch] = useReducer(dataReducer, Data);
     const [timeStamp, setTimeStamp] = useState("now");
 
     const handleSendComment = (content) => {
@@ -17,7 +16,7 @@ function App() {
             content: content,
             createdAt: timeStamp,
             score: 0,
-            user: database.currentUser,
+            user: commentbase.currentUser,
             replies:[]
         })
     }
@@ -41,24 +40,24 @@ function App() {
     return (
         <>
             <div>
-            {database.comments.map((comment) => 
-                (<Comment id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} currentUser={database.currentUser.username}/>)
-            )}
+            {commentbase.comments.map((comment) => (
+                <Comment id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} currentUser={commentbase.currentUser.username}/>
+            ))}
             </div>
-            <CommentEditor user={database.currentUser} onSend={handleSendComment}/>
+            <CommentEditor user={commentbase.currentUser} onSend={handleSendComment}/>
         </>
     )
 }
 
 let nextID = 4;
-const dataReducer = (database, action) => {
+const dataReducer = (commentbase, action) => {
     switch(action.type) {
         case "SEND_COMMENT": {
-            console.log(database.comments);
+            console.log(commentbase.comments);
             return {
-                ...database, 
+                ...commentbase, 
                 comments: [ 
-                    ...database.comments,
+                    ...commentbase.comments,
                     {
                         id: action.id,
                         content:action.content,
@@ -71,7 +70,7 @@ const dataReducer = (database, action) => {
             };
         }
         default: {
-            return database;
+            return commentbase;
         }
     }
 }

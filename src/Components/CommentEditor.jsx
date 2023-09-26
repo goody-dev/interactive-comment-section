@@ -1,6 +1,6 @@
 import { useState } from "react";
 import UserImage from "../assets/images/avatars/image-juliusomo.png";
-import Editor from "./Editor"
+import Editor from "./Editor";
 
 function CommentEditor ({user, onSend}) {
     const [content, setContent] = useState("");
@@ -15,7 +15,7 @@ function CommentEditor ({user, onSend}) {
                 <Editor onEdit={handleContent}/>
                 <div className="flex flex-row justify-between content-center">
                     <img src={UserImage} className="h-7 w-7"/>
-                    <button onClick={handleSend}>SEND</button>
+                    <button className="bg-moderate-blue text-white rounded p-1 w-20" onClick={handleSend}>SEND</button>
                 </div>
         </div>
     )

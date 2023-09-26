@@ -8,7 +8,7 @@ function Editor ({onEdit}) {
     }
     return (
         <>
-            <input placeHolder="Add a comment..." className="rounded border border-light-gray p-5 align-text-top" value={input} onChange={handleChange}/>
+            <input placeholder="Add a comment..." className="rounded border border-light-gray h-24" value={input} onChange={handleChange}/>
         </>
     )
 }
