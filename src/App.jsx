@@ -2,6 +2,7 @@ import './App.css';
 import Comment from './Components/Comment.jsx';
 import CommentEditor from './Components/CommentEditor';
 import Data from './data.json';
+import DeleteCard from './Components/DeleteCard';
 
 import { useState, useReducer } from 'react';
 
