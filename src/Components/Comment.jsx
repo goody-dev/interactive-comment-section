@@ -4,17 +4,12 @@ import ReplyIcon from '../assets/images/icon-reply.svg';
 import DeleteIcon from '../assets/images/icon-delete.svg';
 import EditIcon from '../assets/images/icon-edit.svg';
 
-const newImgPath = (storedPath) => {
-    return "../assets"+storedPath;
-}
-
 
 const Comment = ({currentUser, id, username, content, createdAt, rating, img}) => {
-
     return(
         <div className="bg-white mx-auto max-w-[80%] md:max-w-md space-y-3 shadow-lg flex flex-col m-5 rounded p-5">
             <div className='flex w-fit space-x-4 content-center items-center'>
-                <img src={newImgPath(img)} />
+                <img src={img} className='h-6' alt="User Avatar" />
                 <p className="text-dark-blue">{username}</p>
                 {currentUser === username && <YouTag/>}
                 <p className="text-grayish-blue">{createdAt}</p>

@@ -8,7 +8,7 @@ function Editor ({onEdit}) {
     }
     return (
         <>
-            <input placeholder="Add a comment..." className="rounded border border-light-gray h-24" value={input} onChange={handleChange}/>
+            <textarea placeholder="Add a comment..." className="rounded border border-light-gray h-24 break-words px-5 py-2 overflow-y-auto" value={input} onChange={handleChange}/>
         </>
     )
 }
