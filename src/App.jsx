@@ -5,6 +5,7 @@ import Data from './data.json';
 import DeleteCard from './Components/DeleteCard';
 
 import { useState, useReducer } from 'react';
+import { comment } from 'postcss';
 
 function App() {
     const [commentbase, dispatch] = useReducer(dataReducer, Data);
@@ -13,12 +14,14 @@ function App() {
     const handleSendComment = (content) => {
         dispatch({
             type: "SEND_COMMENT",
-            id: 5,
-            content: content,
-            createdAt: timeStamp,
-            score: 0,
-            user: commentbase.currentUser,
-            replies:[]
+            payload: {
+                id: commentbase.comments.length + 1,
+                content: content,
+                createdAt: timeStamp,
+                score: 0,
+                user: commentbase.currentUser,
+                replies:[]
+            }
         })
     }
     const handleReplyComment = () => {
@@ -37,12 +40,19 @@ function App() {
             type: "DELETE_COMMENT",
         })
     }
+    const handleRating = (id, score) => {
+        dispatch({
+            type: "RATE_COMMENT",
+            payload: {id, score}
+        })
+    }
+
 
     return (
         <>
             <div>
-            {commentbase.comments.map((comment) => (
-                <Comment id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} currentUser={commentbase.currentUser.username}/>
+            {commentbase.comments.map((comment, id) => (
+                <Comment key={id} id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} currentUser={commentbase.currentUser.username} onRate={handleRating}/>
             ))}
             </div>
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment}/>
@@ -54,21 +64,25 @@ let nextID = 4;
 const dataReducer = (commentbase, action) => {
     switch(action.type) {
         case "SEND_COMMENT": {
-            console.log(commentbase.comments);
+            //console.log(commentbase.comments);
             return {
                 ...commentbase, 
                 comments: [ 
                     ...commentbase.comments,
-                    {
-                        id: action.id,
-                        content:action.content,
-                        createdAt: action.createdAt,
-                        score: action.score,
-                        user: action.user,
-                        replies: action.replies,
-                    }
+                    action.payload
                 ],
             };
+        }
+        case "RATE_COMMENT": {
+            return {
+                ...commentbase,
+                comments: commentbase.comments.map((comment)=> {
+                    if(comment.id===action.payload.id) {
+                        return {...comment, score:action.payload.score}
+                    }
+                    return comment;
+                })
+            }
         }
         default: {
             return commentbase;
