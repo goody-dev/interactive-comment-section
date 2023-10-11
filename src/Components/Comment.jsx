@@ -7,7 +7,7 @@ import Edit from './Edit.jsx';
 
 const Comment = ({currentUser, id, username, content, createdAt, rating, img, onRate}) => {
     return(
-        <div className="bg-white mx-auto max-w-[80%] md:max-w-md space-y-3 shadow-lg flex flex-col m-5 rounded p-5">
+        <div className="bg-white mx-auto max-w-[90%] sm:max-w-[80%] md:max-w-lg space-y-3 shadow-lg flex flex-col m-5 rounded p-5">
             <div className='flex w-fit space-x-4 content-center items-center'>
                 <img src={img} className='h-6' alt="User Avatar" />
                 <p className="text-dark-blue">{username}</p>
@@ -31,7 +31,7 @@ const Comment = ({currentUser, id, username, content, createdAt, rating, img, on
 }
 const YouTag = () => {
     return (
-        <button className='rounded bg-moderate-blue px-2 text-white'>
+        <button className='text-xs rounded bg-moderate-blue px-2 py-[0.7px] text-white'>
             you
         </button>
     )
