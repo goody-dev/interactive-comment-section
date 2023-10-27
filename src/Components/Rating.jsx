@@ -2,7 +2,7 @@ import PlusIcon from '../assets/images/icon-plus.svg';
 import MinuIcon from '../assets/images/icon-minus.svg';
 import { useState, useEffect } from 'react';
 
-const Rating = ({rating, onRate, id}) => {
+const Rating = ({screenWidth, rating, onRate, id}) => {
     const [score, setScore] = useState(rating);
     const [negativelyRated, setNegativelyRated] = useState(false);
     const [positivelyRated, setPositivelyRated] = useState(false);
@@ -31,7 +31,7 @@ const Rating = ({rating, onRate, id}) => {
     , [score])
 
     return (
-        <div className='flex bg-light-gray rounded p-1 h-fit space-x-3'>
+        <div className='flex flex-row bg-light-gray rounded p-1 h-fit space-x-3 md:flex-col md:h-[80px] md:min-w-[30px] md:justify-evenly md:items-center md:space-x-0'>
             <button onClick={handlePositiveRating}>
                 <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg" className='fill-light-grayish-blue hover:fill-moderate-blue'><path d="M6.33 10.896c.137 0 .255-.05.354-.149.1-.1.149-.217.149-.354V7.004h3.315c.136 0 .254-.05.354-.149.099-.1.148-.217.148-.354V5.272a.483.483 0 0 0-.148-.354.483.483 0 0 0-.354-.149H6.833V1.4a.483.483 0 0 0-.149-.354.483.483 0 0 0-.354-.149H4.915a.483.483 0 0 0-.354.149c-.1.1-.149.217-.149.354v3.37H1.08a.483.483 0 0 0-.354.15c-.1.099-.149.217-.149.353v1.23c0 .136.05.254.149.353.1.1.217.149.354.149h3.333v3.39c0 .136.05.254.15.353.098.1.216.149.353.149H6.33Z" /></svg>
             </button>

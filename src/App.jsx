@@ -4,12 +4,17 @@ import CommentEditor from './Components/CommentEditor';
 import Data from './data.json';
 import DeleteCard from './Components/DeleteCard';
 
-import { useState, useReducer } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 import { comment } from 'postcss';
 
 function App() {
     const [commentbase, dispatch] = useReducer(dataReducer, Data);
     const [timeStamp, setTimeStamp] = useState("now");
+    const [screenWidth, setScreenWidth] = useState(window.screen.width);
+
+    useEffect(
+        ()=>setScreenWidth(window.screen.width)
+    , [window])
 
     const handleSendComment = (content) => {
         dispatch({
@@ -52,7 +57,7 @@ function App() {
         <>
             <div>
             {commentbase.comments.map((comment, id) => (
-                <Comment key={id} id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} currentUser={commentbase.currentUser.username} onRate={handleRating}/>
+                <Comment screenWidth={screenWidth} key={id} id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} currentUser={commentbase.currentUser.username} onRate={handleRating}/>
             ))}
             </div>
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment}/>
