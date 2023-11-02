@@ -9,12 +9,7 @@ import { comment } from 'postcss';
 
 function App() {
     const [commentbase, dispatch] = useReducer(dataReducer, Data);
-    const [timeStamp, setTimeStamp] = useState("now");
-    const [screenWidth, setScreenWidth] = useState(window.screen.width);
 
-    useEffect(
-        ()=>setScreenWidth(window.screen.width)
-    , [window])
 
     const handleSendComment = (content) => {
         dispatch({
@@ -22,7 +17,7 @@ function App() {
             payload: {
                 id: commentbase.comments.length + 1,
                 content: content,
-                createdAt: timeStamp,
+                createdAt: Date(),
                 score: 0,
                 user: commentbase.currentUser,
                 replies:[]
@@ -57,7 +52,7 @@ function App() {
         <>
             <div>
             {commentbase.comments.map((comment, id) => (
-                <Comment screenWidth={screenWidth} key={id} id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} currentUser={commentbase.currentUser.username} onRate={handleRating}/>
+                <Comment key={id} id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} currentUser={commentbase.currentUser.username} onRate={handleRating}/>
             ))}
             </div>
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment}/>

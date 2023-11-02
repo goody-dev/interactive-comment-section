@@ -3,9 +3,10 @@ import Rating from './Rating';
 import Reply from './Reply.jsx';
 import Delete from './Delete.jsx';
 import Edit from './Edit.jsx';
+import Timestamp from 'react-timestamp';
 
 
-const Comment = ({screenWidth, currentUser, id, username, content, createdAt, rating, img, onRate}) => {
+const Comment = ({currentUser, id, username, content, createdAt, rating, img, onRate}) => {
     return(
         <>
         <div className="md:hidden bg-white mx-auto max-w-[90%] sm:max-w-[80%] space-y-3 shadow-lg flex flex-col m-5 rounded p-5">
@@ -13,7 +14,7 @@ const Comment = ({screenWidth, currentUser, id, username, content, createdAt, ra
                     <img src={img} className='h-6' alt="User Avatar" />
                     <p className="text-dark-blue">{username}</p>
                     {currentUser === username && <YouTag/>}
-                    <p className="text-grayish-blue">{createdAt}</p>
+                    <p className="text-grayish-blue"><Timestamp relative date={createdAt}  autoUpdate/></p>
                 </div>
                 <div className=''>
                     <p className='text-grayish-blue'>{content}</p>
