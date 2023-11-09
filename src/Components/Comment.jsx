@@ -1,4 +1,4 @@
-import './comment.css';
+import './Comment.css';
 import Rating from './Rating';
 import ReplyButton from './ReplyButton.jsx';
 import DeleteButton from './DeleteButton.jsx';
