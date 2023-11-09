@@ -9,7 +9,7 @@ import EditButton from './EditButton.jsx';
 const Reply = ({...props}) => {
     return (
         <div className='mx-auto md:max-w-lg'>
-            <div className="md:hidden bg-white w-auto space-y-3 shadow-lg flex flex-col my-5 rounded p-5">
+            <div className="md:hidden bg-white w-auto space-y-3 shadow-lg flex flex-col rounded p-5">
                 <div className='flex w-fit space-x-4 content-center items-center'>
                     <img src={props.img} className='h-6' alt="User Avatar" />
                     <p className="text-dark-blue">{props.username}</p>
@@ -29,7 +29,7 @@ const Reply = ({...props}) => {
                     </div>}
                 </div>
             </div>
-            <div className="hidden md:flex md:flex-row bg-white mx-auto max-w-[90%] md:max-w-lg md:align-top md:space-x-4 shadow-lg m-5 rounded p-5">
+            <div className="hidden md:flex md:flex-row bg-white mx-auto max-w-[90%] md:max-w-lg md:align-top md:space-x-4 shadow-lg rounded p-5">
                 <div className='md:block w-fit space-x-4'>
                     <Rating rating={props.rating} onRate={props.onRate} id={props.id}/>
                 </div>

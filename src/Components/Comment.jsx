@@ -57,8 +57,8 @@ const Comment = ({currentUser, id, username, content, createdAt, rating, img, on
             </div>
             {replies[0] && //Refrencing the index to check if comment has any replies
             <div className="flex flex-row h-auto mx-auto max-w-[90%] sm:max-w-[80%] md:max-w-xl">
-                <div className="w-2 md:w-1  block my-5 me-5 sm:mx-7 md:mx-8 h-auto bg-light-gray"></div>
-                <div>
+                <div className="w-2 md:w-1 block me-5 sm:mx-7 md:mx-8 h-auto bg-light-gray"></div>
+                <div className="flex flex-col gap-5">
                     {replies.map((reply, id) => <Reply key={id} id={reply.id} username={reply.user.username} content={reply.content} createdAt={reply.createdAt} rating={reply.score} img={reply.user.image.webp} replies={reply.replies} currentUser={currentUser} onRate={onRate}/>)}
                 </div>
             </div>}
