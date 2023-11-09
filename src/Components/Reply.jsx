@@ -1,10 +1,66 @@
-import ReplyIcon from '../assets/images/icon-reply.svg';
+import React from 'react';
+import Timestamp from 'react-timestamp';
 
-const Reply = () => {
+import Rating from './Rating';
+import ReplyButton from './ReplyButton.jsx';
+import DeleteButton from './DeleteButton.jsx';
+import EditButton from './EditButton.jsx';
+
+const Reply = ({...props}) => {
     return (
-        <button className='flex flex-row justify-center items-center fill-moderate-blue hover:fill-light-grayish-blue text-moderate-blue hover:text-light-grayish-blue'>
-            <svg width="14" height="13" xmlns="http://www.w3.org/2000/svg"><path d="M.227 4.316 5.04.16a.657.657 0 0 1 1.085.497v2.189c4.392.05 7.875.93 7.875 5.093 0 1.68-1.082 3.344-2.279 4.214-.373.272-.905-.07-.767-.51 1.24-3.964-.588-5.017-4.829-5.078v2.404c0 .566-.664.86-1.085.496L.227 5.31a.657.657 0 0 1 0-.993Z" /></svg>
-            <p className='ms-1'>Reply</p>
+        <div className='mx-auto md:max-w-lg'>
+            <div className="md:hidden bg-white w-auto space-y-3 shadow-lg flex flex-col my-5 rounded p-5">
+                <div className='flex w-fit space-x-4 content-center items-center'>
+                    <img src={props.img} className='h-6' alt="User Avatar" />
+                    <p className="text-dark-blue">{props.username}</p>
+                    {props.currentUser === props.username && <YouTag/>}
+                    <p className="text-grayish-blue"><Timestamp relative date={props.createdAt}  autoUpdate/></p>
+                </div>
+                <div className=''>
+                    <p className='text-grayish-blue'>{props.content}</p>
+                </div>
+                <div className='flex flex-row justify-between items-center'>
+                    <Rating rating={props.rating} onRate={props.onRate} id={props.id}/>
+                    {props.currentUser !== props.username?
+                    <ReplyButton />:
+                    <div className='flex flex-row justify-center items-center'>
+                        <DeleteButton />
+                        <EditButton />
+                    </div>}
+                </div>
+            </div>
+            <div className="hidden md:flex md:flex-row bg-white mx-auto max-w-[90%] md:max-w-lg md:align-top md:space-x-4 shadow-lg m-5 rounded p-5">
+                <div className='md:block w-fit space-x-4'>
+                    <Rating rating={props.rating} onRate={props.onRate} id={props.id}/>
+                </div>
+                <div className='flex flex-col space-y-3'>
+                    <div className='flex flex-row justify-between items-center'>
+                        <div className='flex w-fit space-x-3 content-center items-center'>
+                            <img src={props.img} className='h-6' alt="User Avatar" />
+                            <p className="text-dark-blue">{props.username}</p>
+                            {props.currentUser === props.username && <YouTag/>}
+                            <p className="text-grayish-blue"><Timestamp relative date={props.createdAt}  autoUpdate/></p>
+                        </div>
+                        {props.currentUser !== props.username?
+                        <ReplyButton />:
+                        <div className='flex flex-row justify-center items-center'>
+                            <DeleteButton />
+                            <EditButton />
+                        </div>}
+                    </div>
+                    <div>
+                        <p className='text-grayish-blue'>{props.content}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const YouTag = () => {
+    return (
+        <button className='text-xs rounded bg-moderate-blue px-2 py-[0.7px] text-white'>
+            you
         </button>
     )
 }

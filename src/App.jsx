@@ -10,7 +10,6 @@ import { comment } from 'postcss';
 function App() {
     const [commentbase, dispatch] = useReducer(dataReducer, Data);
 
-
     const handleSendComment = (content) => {
         dispatch({
             type: "SEND_COMMENT",
@@ -52,7 +51,7 @@ function App() {
         <>
             <div>
             {commentbase.comments.map((comment, id) => (
-                <Comment key={id} id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} currentUser={commentbase.currentUser.username} onRate={handleRating}/>
+                <Comment key={id} id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} replies={comment.replies} currentUser={commentbase.currentUser.username} onRate={handleRating}/>
             ))}
             </div>
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment}/>
