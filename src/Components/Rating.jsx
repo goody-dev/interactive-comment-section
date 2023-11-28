@@ -2,7 +2,7 @@ import PlusIcon from '../assets/images/icon-plus.svg';
 import MinuIcon from '../assets/images/icon-minus.svg';
 import { useState, useEffect } from 'react';
 
-const Rating = ({screenWidth, rating, onRate, id}) => {
+const Rating = ({rating, onRate, id}) => {
     const [score, setScore] = useState(rating);
     const [negativelyRated, setNegativelyRated] = useState(false);
     const [positivelyRated, setPositivelyRated] = useState(false);
@@ -25,7 +25,7 @@ const Rating = ({screenWidth, rating, onRate, id}) => {
         }
     }
 
-    //To update state(single  of truth) immediately
+    //To update state(single source of truth) immediately
     useEffect(()=>
         onRate(id, score)
     , [score])

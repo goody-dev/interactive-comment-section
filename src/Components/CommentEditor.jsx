@@ -2,9 +2,6 @@ import { useState } from "react";
 import Editor from "./Editor";
 
 function CommentEditor ({user, onSend}) {
-    /*flexbox styling
-                
-     */
     //A value that triggers the editor to be cleared each time it state changes due to clicking the send button
     const [sent, setSent] = useState(0);
 

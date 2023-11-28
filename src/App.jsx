@@ -1,20 +1,28 @@
 import './App.css';
-import Comment from './Components/Comment.jsx';
+import Comments from './Components/Comments.jsx';
 import CommentEditor from './Components/CommentEditor';
 import Data from './data.json';
 import DeleteCard from './Components/DeleteCard';
 
 import { useState, useReducer, useEffect } from 'react';
-import { comment } from 'postcss';
 
 function App() {
     const [commentbase, dispatch] = useReducer(dataReducer, Data);
+    const [lastId, setLastId] = useState(4);
+    const [showDeleteCard, setShowDeleteCard]= useState(false);
+
+    const handleDeleteCard = () => {
+        setShowDeleteCard(!showDeleteCard);
+    }
 
     const handleSendComment = (content) => {
+        let commentId=lastId+1;
+        setLastId(commentId);
+        //alert(commentId);
         dispatch({
             type: "SEND_COMMENT",
             payload: {
-                id: commentbase.comments.length + 1,
+                id: commentId,
                 content: content,
                 createdAt: Date(),
                 score: 0,
@@ -34,9 +42,10 @@ function App() {
             comment: content
         })
     }
-    const handleDeleteComment = () => {
+    const handleDeleteComment = (id) => {
         dispatch({
             type: "DELETE_COMMENT",
+            payload: {id}
         })
     }
     const handleRating = (id, score) => {
@@ -46,14 +55,10 @@ function App() {
         })
     }
 
-
     return (
         <>
-            <div>
-            {commentbase.comments.map((comment, id) => (
-                <Comment key={id} id={comment.id} username={comment.user.username} content={comment.content} createdAt={comment.createdAt} rating={comment.score} img={comment.user.image.webp} replies={comment.replies} currentUser={commentbase.currentUser.username} onRate={handleRating}/>
-            ))}
-            </div>
+            {showDeleteCard && <DeleteCard handleDeleteCard={handleDeleteCard}/>}
+            <Comments comments={...commentbase.comments} currentUser={commentbase.currentUser} onRate={handleRating} handleDeleteCard={handleDeleteCard}/>
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment}/>
         </>
     )
@@ -73,14 +78,17 @@ const dataReducer = (commentbase, action) => {
             };
         }
         case "RATE_COMMENT": {
+            const rate = (comment)=> {
+                if(comment.id===action.payload.id) {
+                    return {...comment, score:action.payload.score}
+                } else if (comment.id!==action.payload.id && comment.replies) {
+                    return {...comment, replies: comment.replies.map(rate)}
+                }
+                return comment;
+            }
             return {
                 ...commentbase,
-                comments: commentbase.comments.map((comment)=> {
-                    if(comment.id===action.payload.id) {
-                        return {...comment, score:action.payload.score}
-                    }
-                    return comment;
-                })
+                comments: commentbase.comments.map(rate)
             }
         }
         default: {

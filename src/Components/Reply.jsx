@@ -2,6 +2,7 @@ import React from 'react';
 import Timestamp from 'react-timestamp';
 
 import Rating from './Rating';
+import YouTag from './YouTag.jsx';
 import ReplyButton from './ReplyButton.jsx';
 import DeleteButton from './DeleteButton.jsx';
 import EditButton from './EditButton.jsx';
@@ -53,15 +54,14 @@ const Reply = ({...props}) => {
                     </div>
                 </div>
             </div>
+            {/*props.replies /*Refrencing the index to check if comment has any replies &&
+                <div className="flex flex-row h-auto mx-auto max-w-[90%] sm:max-w-[80%] md:max-w-xl">
+                    <div className="w-2 md:w-1 block me-5 sm:mx-7 md:mx-8 h-auto bg-light-gray"></div>
+                    <div className="flex flex-col gap-5">
+                        {props.replies.map((reply, id) => <Reply key={id} id={reply.id} username={reply.user.username} content={reply.content} createdAt={reply.createdAt} rating={reply.score} img={reply.user.image.webp} replies={reply.replies} currentUser={props.currentUser} onRate={props.onRate} />)}
+                    </div>
+                </div>*/}
         </div>
-    )
-}
-
-const YouTag = () => {
-    return (
-        <button className='text-xs rounded bg-moderate-blue px-2 py-[0.7px] text-white'>
-            you
-        </button>
     )
 }
 
