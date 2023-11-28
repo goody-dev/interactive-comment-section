@@ -12,7 +12,7 @@ import {React, Fragment} from 'react';
 const Comments = ({comments, currentUser, onRate, handleDeleteCard}) => {
   
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-3 z-0'>
         {comments.map((comment, id) => 
         <div key={id} className='flex flex-col' style={{gap:(comment.replies && comment.replies[0])? "0.75rem": 0}}>
         <div className="md:hidden bg-white mx-auto w-[100%] max-w-[90vw] sm:max-w-[80%] shadow-lg flex flex-col m-auto rounded p-5">

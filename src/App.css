@@ -4,4 +4,8 @@ body {
   padding: 0;
   box-sizing: border-box;
   background-color: theme(colors[very-light-gray]);
+  /*display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;*/
 }

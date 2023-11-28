@@ -56,11 +56,11 @@ function App() {
     }
 
     return (
-        <>
+        <div>
             {showDeleteCard && <DeleteCard handleDeleteCard={handleDeleteCard}/>}
             <Comments comments={...commentbase.comments} currentUser={commentbase.currentUser} onRate={handleRating} handleDeleteCard={handleDeleteCard}/>
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment}/>
-        </>
+        </div>
     )
 }
 
