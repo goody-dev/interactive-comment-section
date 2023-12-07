@@ -14,25 +14,24 @@ function App() {
     const [lastId, setLastId] = useState(4); //to keep track of last assigned ids and reference it in setting the next comments id
     const [showDeleteCard, setShowDeleteCard]= useState(false); //to manage the visibility of the delete card.
     const [showReplyEditor, setShowReplyEditor] = useState(false); //to manage the visibility of the reply editor.
-    const [commentId, setCommentId] = useState(); //to retrieve comment idea from event points
+    const [commentToDlt, setCommentToDlt] = useState(); //to retrieve comment idea from event points
 
     //To togggle delete card's visiilty - takes true or false
-    const handleDeleteCard = (status, id) => {
-        setShowDeleteCard(status);
-        setCommentId(id);
-        //alert(commentId);
+    const handleDeleteCard = (visibility, id) => {
+        setShowDeleteCard(visibility);
+        setCommentToDlt(id);
     }
 
     //To toggle reply card's visibility - takes true or false
-    const handleReplyEditor = (status) => {
-        setShowReplyEditor(status);
+    const handleReplyEditor = (visibility) => {
+        setShowReplyEditor(visibility);
     }
 
     //Takes content, generates necessary data on call and dispathes a "SEND_COMMENT" with payload to the commentReducer
     const handleSendComment = (content) => {
         let commentId=lastId+1;
         setLastId(commentId);
-        //alert(commentId);
+        
         dispatch({
             type: "SEND_COMMENT",
             payload: {
@@ -92,41 +91,62 @@ function App() {
 
     return (
         <div>
-            {showDeleteCard && <DeleteCard commentId={commentId} handleDeleteCard={handleDeleteCard} handleDeleteComment={handleDeleteComment}/>}
+            {showDeleteCard && <DeleteCard commentToDlt={commentToDlt} handleDeleteCard={handleDeleteCard} handleDeleteComment={handleDeleteComment}/>}
             <Comments comments={commentbase.comments} currentUser={commentbase.currentUser} onRate={handleRating} handleDeleteCard={handleDeleteCard} onReply={handleReplyComment} replyEditor={showReplyEditor} handleReplyEditor={handleReplyEditor}/>
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment} />
         </div>
     )
 }
 
+const findComment = (comments, commentId, nestKey) => {
+    for(const key in comments) {
+        const comment = comments[key];
+
+        if(comment.id === commentId) {
+            return comment;
+        }
+        if(comment[nestKey] && comment[nestKey].length !== 0) {
+            const foundReply = findComment(comment[nestKey], commentId, nestKey);
+            if(foundReply) {
+                return foundReply;
+            }
+        }
+    }
+    return null;
+}
+
 const commentReducer = produce((draft, action)=>{
+    //console.log(draft.comments);
     switch(action.type) {
         case "SEND_COMMENT": {
-            draft.comments.push(action.payload)
+            draft.comments.push(action.payload);
+            break;
         }
         case "RATE_COMMENT": {
-            const findComment = (comments, commentId, nestKey) => {
-                for(const i in comments) {
-                    const comment = comments[i];
-
-                    if(comment.id === commentId) {
-                        return comment;
-                    }
-                    if(comment[nestKey] && comment[nestKey].length !== 0) {
-                        const ratedReply = findComment(comment[nestKey], commentId, nestKey);
-                        if(ratedReply) {
-                            return ratedReply;
+            const ratedComment = findComment(draft.comments, action.payload.id, "replies") || 0;
+            ratedComment && (ratedComment.score = action.payload.score);
+            break;
+        }
+        case "DELETE_COMMENT": {
+            const updateBase = (comments, id, nestKey) => {
+                let updatedBase = comments;
+                let removed = updatedBase.filter((comment)=> comment.id === id);
+                
+                if(removed.length !== 0) {
+                    updatedBase = updatedBase.filter((comment)=>comment.id !== id);
+                } else {
+                    for(const key in updatedBase) {
+                        if(updatedBase[key][nestKey].length !== 0) {
+                            updatedBase[key][nestKey] = updateBase(updatedBase[key][nestKey], id, nestKey)
                         }
                     }
                 }
-                
-                return null;
+                console.log(updatedBase[2]);
+                return updatedBase;
             }
-            const ratedComment = findComment(draft.comments, action.payload.id, "replies") || 0;
-            ratedComment && (ratedComment.score = action.payload.score);
-        }
-        case "DELETE_COMMENT": {
             
+            draft.comments = updateBase(draft.comments, action.payload.id, "replies");
+            break;
         }
         default: {
             draft

@@ -1,9 +1,9 @@
-const DeleteCard = ({handleDeleteCard, handleDeleteComment, commentId}) => {
+const DeleteCard = ({handleDeleteCard, handleDeleteComment, commentToDlt}) => {
     const handleCancel = () => {
         handleDeleteCard(false)
     }
     const handleDelete = () => {
-        handleDeleteComment(commentId);
+        handleDeleteComment(commentToDlt);
         handleDeleteCard(false);
     }
     return(
