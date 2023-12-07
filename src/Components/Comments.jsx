@@ -7,10 +7,15 @@ import YouTag from './YouTag.jsx';
 
 import ReplyEditor from './ReplyEditor.jsx';
 
-import {React, Fragment} from 'react';
+import {React, useState} from 'react';
 
-const Comments = ({comments, currentUser, onRate, handleDeleteCard, onReply, replyEditor, handleReplyEditor}) => {
-  
+const Comments = ({comments, currentUser, onRate, handleDeleteCard, onReply}) => {
+    const [replyEditorVisibility, setReplyEditorVisibility] = useState(false); //to manage the visibility of the reply editor.
+    const [focusCommentId, setFocusCommentId] = useState(null);
+    const handleReplyEditor = (visibility, id) => {
+        setReplyEditorVisibility(visibility);
+        setFocusCommentId(id);
+    }
   return (
     <div className='flex flex-col gap-3 z-0'>
         {comments.map((comment, id) => 
@@ -28,7 +33,7 @@ const Comments = ({comments, currentUser, onRate, handleDeleteCard, onReply, rep
                 <div className='flex flex-row justify-between items-center'>
                     <Rating rating={comment.score} onRate={onRate} id={comment.id}/>
                     {currentUser.username !== comment.user.username?
-                    <ReplyButton onClickReply={(visibility)=>handleReplyEditor(visibility)}/>:
+                    <ReplyButton onClickReply={handleReplyEditor} id={comment.id}/>:
                     <div className='flex flex-row justify-center items-center'>
                         <DeleteButton id={comment.id} onDelete={(visibility, id)=>handleDeleteCard(visibility, id)}/>
                         <EditButton/>
@@ -48,7 +53,7 @@ const Comments = ({comments, currentUser, onRate, handleDeleteCard, onReply, rep
                             <p className="text-grayish-blue"><Timestamp relative date={comment.createdAt}  autoUpdate/></p>
                         </div>
                         {currentUser.username !== comment.user.username?
-                        <ReplyButton onClickReply={(visibility)=>handleReplyEditor(visibility)}/>:
+                        <ReplyButton onClickReply={handleReplyEditor} id={comment.id}/>:
                         <div className='flex flex-row justify-center items-center'>
                             <DeleteButton id={comment.id} onDelete={(visibility, id)=>handleDeleteCard(visibility, id)}/>
                             <EditButton/>
@@ -59,11 +64,11 @@ const Comments = ({comments, currentUser, onRate, handleDeleteCard, onReply, rep
                     </div>
                 </div>
             </div>
-            {replyEditor && <ReplyEditor key={comment.id} replyingTo={comment.user.username} parId={comment.id} user={currentUser} onReply={onReply} handleReplyEditor={handleReplyEditor}/>}
+            {(replyEditorVisibility === true && focusCommentId === comment.id) && <ReplyEditor key={comment.id} replyingTo={comment.user.username} parId={comment.id} user={currentUser} onReply={onReply} handleReplyEditor={handleReplyEditor}/>}
             {comment.replies.length !== 0 && //Refrencing the index to check if comment has any replies
             <div className="flex flex-row h-auto mx-auto max-w-[90vw] sm:max-w-[80vw] md:max-w-xl">
                 <div className="w-2 md:w-1 block space-y-5 me-5 sm:mx-7 md:mx-8 h-auto bg-light-gray"></div>
-                <Comments comments={comment.replies} currentUser={currentUser} onRate={onRate} handleDeleteCard={handleDeleteCard} onReply={onReply} replyEditor={replyEditor} handleReplyEditor={handleReplyEditor}/> 
+                <Comments comments={comment.replies} currentUser={currentUser} onRate={onRate} handleDeleteCard={handleDeleteCard} onReply={onReply} /> 
             </div>}
         </div>
         )}

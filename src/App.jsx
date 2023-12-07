@@ -13,18 +13,12 @@ function App() {
     const [commentbase, dispatch] = useReducer(commentReducer, Data);
     const [lastId, setLastId] = useState(4); //to keep track of last assigned ids and reference it in setting the next comments id
     const [showDeleteCard, setShowDeleteCard]= useState(false); //to manage the visibility of the delete card.
-    const [replyEditorVisibility, setReplyEditorVisibility] = useState(false); //to manage the visibility of the reply editor.
     const [commentToDlt, setCommentToDlt] = useState(); //to retrieve comment idea from event points
 
     //To togggle delete card's visiilty - takes true or false
     const handleDeleteCard = (visibility, id) => {
         setShowDeleteCard(visibility);
         setCommentToDlt(id);
-    }
-
-    //To toggle reply card's visibility - takes true or false
-    const handleReplyEditor = (visibility) => {
-        setReplyEditorVisibility(visibility);
     }
 
     //Takes content, generates necessary data on call and dispathes a "SEND_COMMENT" with payload to the commentReducer
@@ -93,7 +87,7 @@ function App() {
     return (
         <div>
             {showDeleteCard && <DeleteCard commentToDlt={commentToDlt} handleDeleteCard={handleDeleteCard} handleDeleteComment={handleDeleteComment}/>}
-            <Comments comments={commentbase.comments} currentUser={commentbase.currentUser} onRate={handleRating} handleDeleteCard={handleDeleteCard} onReply={handleReplyComment} replyEditor={replyEditorVisibility} handleReplyEditor={handleReplyEditor}/>
+            <Comments comments={commentbase.comments} currentUser={commentbase.currentUser} onRate={handleRating} handleDeleteCard={handleDeleteCard} onReply={handleReplyComment} />
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment} />
         </div>
     )
