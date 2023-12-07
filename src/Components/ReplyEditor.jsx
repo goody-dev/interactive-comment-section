@@ -2,7 +2,7 @@ import { useState } from "react";
 import Editor from "./Editor";
 
 
-function ReplyEditor ({user, onReply, parId, replyingTo}) {
+function ReplyEditor ({user, onReply, parId, replyingTo, handleReplyEditor}) {
         //A value that triggers the editor to be cleared each time it state changes due to clicking the send button
         const [replySent, setReplySent] = useState(0);
 
@@ -13,6 +13,7 @@ function ReplyEditor ({user, onReply, parId, replyingTo}) {
         const handleReply = () => {
             onReply(content, parId, replyingTo);
             setReplySent(replySent+1);
+            handleReplyEditor(false);
         }
         return (
             <div className="flex flex-col bg-white mx-auto w-[100%] max-w-[90%] sm:max-w-[80%] md:max-w-xl lg:max-w-xl md:flex-row md:align-top justify-stretch shadow-lg m-5 rounded p-5 gap-3">

@@ -13,7 +13,7 @@ function App() {
     const [commentbase, dispatch] = useReducer(commentReducer, Data);
     const [lastId, setLastId] = useState(4); //to keep track of last assigned ids and reference it in setting the next comments id
     const [showDeleteCard, setShowDeleteCard]= useState(false); //to manage the visibility of the delete card.
-    const [showReplyEditor, setShowReplyEditor] = useState(false); //to manage the visibility of the reply editor.
+    const [replyEditorVisibility, setReplyEditorVisibility] = useState(false); //to manage the visibility of the reply editor.
     const [commentToDlt, setCommentToDlt] = useState(); //to retrieve comment idea from event points
 
     //To togggle delete card's visiilty - takes true or false
@@ -24,7 +24,7 @@ function App() {
 
     //To toggle reply card's visibility - takes true or false
     const handleReplyEditor = (visibility) => {
-        setShowReplyEditor(visibility);
+        setReplyEditorVisibility(visibility);
     }
 
     //Takes content, generates necessary data on call and dispathes a "SEND_COMMENT" with payload to the commentReducer
@@ -60,6 +60,7 @@ function App() {
                 score: 0,
                 replyingTo: replyingTo,
                 user: commentbase.currentUser,
+                replies:[]
             }
         })
     }
@@ -92,7 +93,7 @@ function App() {
     return (
         <div>
             {showDeleteCard && <DeleteCard commentToDlt={commentToDlt} handleDeleteCard={handleDeleteCard} handleDeleteComment={handleDeleteComment}/>}
-            <Comments comments={commentbase.comments} currentUser={commentbase.currentUser} onRate={handleRating} handleDeleteCard={handleDeleteCard} onReply={handleReplyComment} replyEditor={showReplyEditor} handleReplyEditor={handleReplyEditor}/>
+            <Comments comments={commentbase.comments} currentUser={commentbase.currentUser} onRate={handleRating} handleDeleteCard={handleDeleteCard} onReply={handleReplyComment} replyEditor={replyEditorVisibility} handleReplyEditor={handleReplyEditor}/>
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment} />
         </div>
     )
@@ -146,6 +147,12 @@ const commentReducer = produce((draft, action)=>{
             }
             
             draft.comments = updateBase(draft.comments, action.payload.id, "replies");
+            break;
+        }
+        case "REPLY_COMMENT": {
+            const repliedComment = findComment(draft.comments, action.payload.parentId, "replies");
+            //console.log(action.payload.parentId);
+            repliedComment && repliedComment.replies.push(action.payload);
             break;
         }
         default: {
