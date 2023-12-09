@@ -11,20 +11,34 @@ import { comment } from 'postcss';
 
 function App() {
     const [commentbase, dispatch] = useReducer(commentReducer, Data);
-    const [lastId, setLastId] = useState(4); //to keep track of last assigned ids and reference it in setting the next comments id
+    const [lastAssignedId, setLastAssignedId] = useState(4); //to keep track of last assigned ids and reference it in setting the next comments id
     const [showDeleteCard, setShowDeleteCard]= useState(false); //to manage the visibility of the delete card.
-    const [commentToDlt, setCommentToDlt] = useState(); //to retrieve comment idea from event points
+    const [replyEditorVisibility, setReplyEditorVisibility] = useState(false); //to manage the visibility of the reply editor.
+    const [focusCommentId, setFocusCommentId] = useState(null); //to retrieve comment id from event points amd feed to ACTIONS.
+    const [editMode, setEditMode] = useState(false);
+
+    const handleReplyEditor = (visibility, id) => {
+        setEditMode(false);
+        setReplyEditorVisibility(visibility);
+        setFocusCommentId(id);
+    }
+
+    const handleEditEditor = (status, id) => {
+        setReplyEditorVisibility(false);
+        setEditMode(status);
+        setFocusCommentId(id);
+    }
 
     //To togggle delete card's visiilty - takes true or false
     const handleDeleteCard = (visibility, id) => {
         setShowDeleteCard(visibility);
-        setCommentToDlt(id);
+        setFocusCommentId(id);
     }
 
     //Takes content, generates necessary data on call and dispathes a "SEND_COMMENT" with payload to the commentReducer
     const handleSendComment = (content) => {
-        let commentId=lastId+1;
-        setLastId(commentId);
+        let commentId=lastAssignedId+1;
+        setLastAssignedId(commentId);
         
         dispatch({
             type: "SEND_COMMENT",
@@ -41,8 +55,8 @@ function App() {
 
     //Takes (content, replyingToID, and replyingTo Username), generates necessary data on call and dispathes a "REPLY_COMMENT" with payload to the commentReducer
     const handleReplyComment = (content, parentId, replyingTo) => {
-        let commentId=lastId+1;
-        setLastId(commentId);
+        let commentId=lastAssignedId+1;
+        setLastAssignedId(commentId);
         //alert(commentId);
         dispatch({
             type: "REPLY_COMMENT",
@@ -60,10 +74,14 @@ function App() {
     }
 
 
-    const handleUpdateComment = () => {
+    const handleUpdateComment = (content, commentId) => {
         dispatch({
             type: "UPDATE_COMMENT",
-            comment: content
+            payload:{
+                id:commentId, 
+                content,
+                createdAt: Date()
+            }
         })
     }
 
@@ -86,8 +104,8 @@ function App() {
 
     return (
         <div>
-            {showDeleteCard && <DeleteCard commentToDlt={commentToDlt} handleDeleteCard={handleDeleteCard} handleDeleteComment={handleDeleteComment}/>}
-            <Comments comments={commentbase.comments} currentUser={commentbase.currentUser} onRate={handleRating} handleDeleteCard={handleDeleteCard} onReply={handleReplyComment} />
+            {showDeleteCard && <DeleteCard focusCommentId={focusCommentId} handleDeleteCard={handleDeleteCard} handleDeleteComment={handleDeleteComment}/>}
+            <Comments comments={commentbase.comments} currentUser={commentbase.currentUser} focusCommentId={focusCommentId} handleRating={handleRating} handleDeleteCard={handleDeleteCard} handleReplyComment={handleReplyComment} handleReplyEditor={handleReplyEditor} replyEditorVisibility={replyEditorVisibility} handleEditEditor={handleEditEditor} editMode={editMode} handleUpdateComment={handleUpdateComment} />
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment} />
         </div>
     )
@@ -136,7 +154,7 @@ const commentReducer = produce((draft, action)=>{
                         }
                     }
                 }
-                console.log(updatedBase[2]);
+                
                 return updatedBase;
             }
             
@@ -147,6 +165,14 @@ const commentReducer = produce((draft, action)=>{
             const repliedComment = findComment(draft.comments, action.payload.parentId, "replies");
             //console.log(action.payload.parentId);
             repliedComment && repliedComment.replies.push(action.payload);
+            break;
+        }
+        case "UPDATE_COMMENT": {
+            const commentToUpdate = findComment(draft.comments, action.payload.id, "replies");
+            if(commentToUpdate) {
+                commentToUpdate.content = action.payload.content;
+                commentToUpdate.createdAt = action.payload.createdAt;
+            }
             break;
         }
         default: {
