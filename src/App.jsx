@@ -128,6 +128,23 @@ const findComment = (comments, commentId, nestKey) => {
     return null;
 }
 
+const findAuthorComment = (comments, commentId, nestKey) => {
+    for(const key in comments) {
+        const comment = comments[key];
+
+        if(comment.id === commentId) {
+            return comment;
+        }
+        if(comment[nestKey] && comment[nestKey].length !== 0) {
+            const foundReply = findComment(comment[nestKey], commentId, nestKey);
+            if(foundReply) {
+                return comment;
+            }
+        }
+    }
+    return null;
+}
+
 const commentReducer = produce((draft, action)=>{
     //console.log(draft.comments);
     switch(action.type) {
@@ -162,9 +179,9 @@ const commentReducer = produce((draft, action)=>{
             break;
         }
         case "REPLY_COMMENT": {
-            const repliedComment = findComment(draft.comments, action.payload.parentId, "replies");
+            const authorComment = findAuthorComment(draft.comments, action.payload.parentId, "replies");
             //console.log(action.payload.parentId);
-            repliedComment && repliedComment.replies.push(action.payload);
+            authorComment && authorComment.replies.push(action.payload);
             break;
         }
         case "UPDATE_COMMENT": {

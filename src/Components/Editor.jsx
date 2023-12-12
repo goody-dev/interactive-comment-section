@@ -20,7 +20,7 @@ function Editor ({onEdit, status, children}) {
 
     return (
         <>
-            <textarea onFocus={allowEdit} placeholder={children} className="rounded border-[1.8px] border-light-gray hover:border-moderate-blue cursor-pointer break-words px-5 py-2 overflow-y-auto md:w-full md:order-2" value={input} onChange={handleChange}/>
+            <textarea onFocus={allowEdit} placeholder={children} className="rounded border-[1.8px] border-light-gray hover:border-moderate-blue cursor-pointer break-words px-5 py-2 overflow-y-auto sm:w-full sm:order-2" value={input} onChange={handleChange}/>
         </>
     )
 }
