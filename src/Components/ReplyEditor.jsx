@@ -5,10 +5,11 @@ import Editor from "./Editor";
 function ReplyEditor ({user, onReply, parentId, replyingTo, handleReplyEditor}) {
         //A value that triggers the editor to be cleared each time it state changes due to clicking the send button
         const [replySent, setReplySent] = useState(0);
-
         const [content, setContent] = useState(null);
         const handleContent = (content) => {
-            setContent(content);
+            let tagRegex = /[@]{1}[a-z]+/g;
+            let formatedContent = content.replace(tagRegex, ""); //the content after the tag in the editor has been removed.
+            setContent(formatedContent);
         }
         const handleReply = () => {
             if(content) {
@@ -28,4 +29,4 @@ function ReplyEditor ({user, onReply, parentId, replyingTo, handleReplyEditor}) 
             </div>
         )
 }
-export default ReplyEditor
+export default ReplyEditor 
