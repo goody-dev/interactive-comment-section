@@ -20,7 +20,7 @@ function ReplyEditor ({user, onReply, parentId, replyingTo, handleReplyEditor}) 
         }
 
         return (
-            <div className="flex flex-col bg-white mx-auto w-[100%] max-w-[90%] sm:max-w-xl lg:max-w-xl sm:flex-row sm:align-top justify-stretch shadow-lg rounded p-5 gap-3">
+            <div className="flex flex-col bg-white mx-auto w-[100%] sm:max-w-xl lg:max-w-xl sm:flex-row sm:align-top justify-stretch shadow-lg rounded p-5 gap-3">
                 <Editor onEdit={handleContent} status={replySent} >{"@"+replyingTo}</Editor>
                 <div className="flex flex-row justify-between content-center sm:contents">
                     <img src={user.image.webp} className="h-7 w-7 sm:align-start float-left sm:order-1"/>

@@ -9,19 +9,25 @@ const Rating = ({rating, onRate, id}) => {
 
     //To handle positive rating and remove prior negative rating
     const handlePositiveRating = () => {
-        if(!positivelyRated) {
+        if(!positivelyRated && !negativelyRated) {
             setScore(score+1);
             setPositivelyRated(true);
             setNegativelyRated(false);
+        } else if (positivelyRated) {
+            setScore(score-1);
+            setPositivelyRated(false);
         }
     }
 
     //To handle negative rating and remove prior positive rating
     const handleNegativeRating = () => {
-        if(!negativelyRated) {
+        if(!negativelyRated && !positivelyRated) {
             setScore(score-1);
             setNegativelyRated(true);
             setPositivelyRated(false);
+        } else if (negativelyRated) {
+            setScore(score+1);
+            setNegativelyRated(false);
         }
     }
 

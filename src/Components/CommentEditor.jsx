@@ -16,7 +16,7 @@ function CommentEditor ({user, onSend}) {
         }
     }
     return (
-        <div className="flex flex-col bg-white mx-auto max-w-[90%] sm:max-w-xl lg:max-w-xl sm:flex-row sm:align-top justify-stretch shadow-lg m-5 rounded p-5 gap-3">
+        <div className="flex flex-col bg-white mx-auto max-w-[90vw] sm:max-w-[70vw] lg:max-w-xl sm:flex-row sm:align-top justify-stretch shadow-lg m-5 rounded p-5 gap-3">
             <Editor onEdit={handleContent} status={sent}>Add a comment...</Editor>
             <div className="flex flex-row justify-between content-center sm:contents">
                 <img src={user.image.webp} className="h-7 w-7 sm:align-start float-left sm:order-1"/>
