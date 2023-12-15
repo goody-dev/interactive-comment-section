@@ -12,7 +12,14 @@ import {React, useState} from 'react';
 
 
 const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDeleteCard, handleReplyComment, replyEditorVisibility, handleReplyEditor, handleEditEditor, editMode, handleUpdateComment}) => {
-
+  /*if(comments[0].replyingTo){
+    comments.sort((reply, nextReply)=> nextReply.id-reply.id);
+    alert("ordered by id");
+  } else {
+    comments.sort((comment, nextComment)=> nextComment.score-comment.score);
+    alert("ordered by score");
+  }*/  //Prototype to order comments by score and time
+  
   return (
     <div className='flex flex-col gap-3 z-0 w-fit sm:w-[70vw] mx-auto' style={{marginTop:!comments[0].replyingTo && "1.25rem"}}> 
         {comments.map((comment, id) => 
