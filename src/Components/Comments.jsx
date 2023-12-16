@@ -48,7 +48,6 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
                     </div>}
                 </div>
             </div>
-
             <div className="hidden sm:flex bg-white sm:flex-row mx-auto sm:max-w-xl sm:w-[100%] sm:align-top sm:space-x-4 shadow-lg rounded p-5 gap-y-5">
                 <div className='sm:block w-fit space-x-4'>
                     <Rating rating={comment.score} onRate={handleRating} id={comment.id}/>
@@ -73,13 +72,11 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
                     </div>
                 </div>
             </div>
-
             <div> 
                 {(replyEditorVisibility === true && focusCommentId === comment.id) && <ReplyEditor key={comment.id} replyingTo={comment.user.username} parentId={comment.id} user={currentUser} onReply={handleReplyComment} handleReplyEditor={handleReplyEditor}/>}
             </div>
-
             {comment.replies.length !== 0 && //Refrencing the index to check if comment has any replies
-            <div className="flex flex-row h-auto mx-auto max-w-[90vw] sm:w-[100%] md:max-w-xl">
+            <div className="flex flex-row h-auto bg-moderate-blue mx-auto max-w-[90vw] sm:w-[100%] md:max-w-xl">
                 <div className="w-2 md:w-1 block space-y-5 me-5 sm:mx-7 md:mx-8 h-auto bg-light-gray"></div>
                 <Comments comments={comment.replies} currentUser={currentUser} focusCommentId={focusCommentId} handleRating={handleRating} handleDeleteCard={handleDeleteCard} handleReplyComment={handleReplyComment} handleReplyEditor={handleReplyEditor} replyEditorVisibility={replyEditorVisibility} handleEditEditor={handleEditEditor} editMode={editMode} handleUpdateComment={handleUpdateComment}/> 
             </div>}
