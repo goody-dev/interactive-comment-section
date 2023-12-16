@@ -16,7 +16,11 @@ export default {
       'very-light-gray': 'hsl(228, 33%, 97%)',
       'white': 'hsl(0, 0%, 100%)',
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        'rubik': ['Rubik', 'sans-serif']
+      },
+    },
   },
   plugins: [],
 }

@@ -103,7 +103,7 @@ function App() {
     }
 
     return (
-        <div>
+        <div className='text-xs font-rubik'>
             {showDeleteCard && <DeleteCard showDelete={showDeleteCard} focusCommentId={focusCommentId} handleDeleteCard={handleDeleteCard} handleDeleteComment={handleDeleteComment}/>}
             <Comments comments={commentbase.comments} currentUser={commentbase.currentUser} focusCommentId={focusCommentId} handleRating={handleRating} handleDeleteCard={handleDeleteCard} handleReplyComment={handleReplyComment} handleReplyEditor={handleReplyEditor} replyEditorVisibility={replyEditorVisibility} handleEditEditor={handleEditEditor} editMode={editMode} handleUpdateComment={handleUpdateComment} />
             <CommentEditor user={commentbase.currentUser} onSend={handleSendComment} />

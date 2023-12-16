@@ -31,12 +31,12 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
             <div className="sm:hidden bg-white mx-auto min-w-[100%] max-w-[90vw] shadow-lg flex flex-col m-auto rounded p-5 gap-y-3">
                 <div className='flex w-fit space-x-4 content-center items-center'>
                     <img src={comment.user.image.webp} className='h-6' alt="User Avatar" />
-                    <p className="text-dark-blue">{comment.user.username}</p>
+                    <p className="text-dark-blue font-[500]">{comment.user.username}</p>
                     {currentUser.username === comment.user.username && <YouTag/>}
-                    <p className="text-grayish-blue"><Timestamp relative date={comment.createdAt} autoUpdate/></p>
+                    <p className="text-grayish-blue font-[400]"><Timestamp relative date={comment.createdAt} autoUpdate/></p>
                 </div>
                 <div className=''>
-                    {editMode === true && comment.id === focusCommentId? <EditEditor onUpdate={handleUpdateComment} comment={comment.content} handleEditEditor={handleEditEditor} commentId={comment.id} replyingTo={comment.replyingTo}/>: <p className='content text-grayish-blue break-words'>{comment.replyingTo && <span className="text-moderate-blue font-semibold">@{comment.replyingTo}</span>}{comment.content}</p>}
+                    {editMode === true && comment.id === focusCommentId? <EditEditor onUpdate={handleUpdateComment} comment={comment.content} handleEditEditor={handleEditEditor} commentId={comment.id} replyingTo={comment.replyingTo}/>: <p className='content text-grayish-blue break-words font-[400]'>{comment.replyingTo && <span className="text-moderate-blue font-[500]">@{comment.replyingTo}</span>}{comment.content}</p>}
                 </div>
                 <div className='flex flex-row justify-between items-center'>
                     <Rating rating={comment.score} onRate={handleRating} id={comment.id}/>
@@ -57,9 +57,9 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
                     <div className='flex flex-row justify-between items-center'>
                         <div className='flex w-fit space-x-3 content-center items-center'>
                             <img src={comment.user.image.webp} className='h-6' alt="User Avatar" />
-                            <p className="text-dark-blue">{comment.user.username}</p>
+                            <p className="text-dark-blue font-[500]">{comment.user.username}</p>
                             {currentUser.username === comment.user.username && <YouTag/>}
-                            <p className="text-grayish-blue"><Timestamp relative date={comment.createdAt}  autoUpdate/></p>
+                            <p className="text-grayish-blue font-[400]"><Timestamp relative date={comment.createdAt}  autoUpdate/></p>
                         </div>
                         {currentUser.username !== comment.user.username?
                         <ReplyButton onClickReply={handleReplyEditor} id={comment.id}/>:
@@ -69,7 +69,7 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
                         </div>}
                     </div>
                     <div>
-                    {editMode === true && comment.id === focusCommentId? <EditEditor onUpdate={handleUpdateComment} comment={comment.content} handleEditEditor={handleEditEditor} commentId={comment.id} replyingTo={comment.replyingTo}/>: <p className='content text-grayish-blue break-words'>{comment.replyingTo && <span className="text-moderate-blue font-semibold">@{comment.replyingTo}</span>}{comment.content}</p>}
+                    {editMode === true && comment.id === focusCommentId? <EditEditor onUpdate={handleUpdateComment} comment={comment.content} handleEditEditor={handleEditEditor} commentId={comment.id} replyingTo={comment.replyingTo}/>: <p className='content text-grayish-blue break-words font-[400]'>{comment.replyingTo && <span className="text-moderate-blue font-[500]">@{comment.replyingTo}</span>}{comment.content}</p>}
                     </div>
                 </div>
             </div>

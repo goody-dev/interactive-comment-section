@@ -20,7 +20,7 @@ function CommentEditor ({user, onSend}) {
             <Editor onEdit={handleContent} status={sent}>Add a comment...</Editor>
             <div className="flex flex-row justify-between content-center sm:contents">
                 <img src={user.image.webp} className="h-7 w-7 sm:align-start float-left sm:order-1"/>
-                <button className="bg-moderate-blue hover:bg-light-grayish-blue text-white rounded p-1 w-20 h-fit md:h-10 sm:order-3" onClick={handleSend}>SEND</button>
+                <button className="bg-moderate-blue hover:bg-light-grayish-blue text-white rounded p-1 w-20 h-fit md:h-10 sm:order-3 font-[500]" onClick={handleSend}>SEND</button>
             </div>
         </div>
     )
