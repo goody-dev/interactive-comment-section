@@ -7,7 +7,7 @@ function Editor ({onEdit, status, children}) {
     }
 
     const allowEdit = () => {
-        setInput(children);
+        children !== "Add a comment..." && setInput(children);
     }
     //To update the application state immediately there is change in input
     useEffect(()=>
