@@ -53,8 +53,8 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 - Flexbox
 - localStorage - to save states in the browser
 - Mobile-first workflow
-- [immerjs](https://immerjs.github.io) - A tiny package that allows you to work with immutable state in a more convenient way.
-- [React Timestamp](https://www.npmjs.com/react-timestamp) - A React Component for displaying a datetime in local timezone.
+- [immerjs](https://immerjs.github.io) - A tiny package that allows you to work with immutable state in a more convenient way
+- [React Timestamp](https://www.npmjs.com/react-timestamp) - A React Component for displaying a datetime in local timezone
 - [React](https://reactjs.org/) - JS library
 - [TailwindCSS](https://tailwindcss.com) - CSS framework
 
@@ -89,7 +89,7 @@ I would like to improve my problem solving skills and build more complex compone
 ### Useful resources
 
 - [React Documentation](https://www.react.dev) - I worked with the react documentation while building, it helped better my understanding of some concepts.
-- [Tailwind Documentation](https://www.tailwindcss.com) - I used it in learning styling based on variables.
+- [Tailwind Documentation](https://www.tailwindcss.com) - I used it in learning styling based on variables, or conditional tailwind styling if you will.
 
 ## Author
 
