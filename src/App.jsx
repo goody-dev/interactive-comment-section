@@ -10,7 +10,9 @@ import { produce } from 'immer';
 import { comment } from 'postcss';
 
 function App() {
-    const [commentbase, dispatch] = useReducer(commentReducer, Data);
+    //localStorage.clear();
+    let data = JSON.parse(localStorage.getItem('Data')) || Data;
+    const [commentbase, dispatch] = useReducer(commentReducer, data);
     const [lastAssignedId, setLastAssignedId] = useState(4); //to keep track of last assigned ids and reference it in setting the next comments id
     const [showDeleteCard, setShowDeleteCard]= useState(false); //to manage the visibility of the delete card.
     const [replyEditorVisibility, setReplyEditorVisibility] = useState(false); //to manage the visibility of the reply editor.
@@ -150,11 +152,13 @@ const commentReducer = produce((draft, action)=>{
     switch(action.type) {
         case "SEND_COMMENT": {
             draft.comments.push(action.payload);
+            localStorage.setItem('Data', JSON.stringify(draft));
             break;
         }
         case "RATE_COMMENT": {
             const ratedComment = findComment(draft.comments, action.payload.id, "replies") || 0;
             ratedComment && (ratedComment.score = action.payload.score);
+            localStorage.setItem('Data', JSON.stringify(draft));
             break;
         }
         case "DELETE_COMMENT": {
@@ -171,17 +175,18 @@ const commentReducer = produce((draft, action)=>{
                         }
                     }
                 }
-                
+                localStorage.setItem('Data', JSON.stringify(draft));
                 return updatedBase;
             }
             
             draft.comments = updateBase(draft.comments, action.payload.id, "replies");
+            localStorage.setItem('Data', JSON.stringify(draft));
             break;
         }
         case "REPLY_COMMENT": {
             const authorComment = findAuthorComment(draft.comments, action.payload.parentId, "replies");
-            //console.log(action.payload.parentId);
             authorComment && authorComment.replies.push(action.payload);
+            localStorage.setItem('Data', JSON.stringify(draft));
             break;
         }
         case "UPDATE_COMMENT": {
@@ -189,11 +194,13 @@ const commentReducer = produce((draft, action)=>{
             if(commentToUpdate) {
                 commentToUpdate.content = action.payload.content;
                 commentToUpdate.createdAt = action.payload.createdAt;
+                localStorage.setItem('Data', JSON.stringify(draft));
             }
             break;
         }
         default: {
-            draft
+            draft;
+            //localStorage.setItem('Data', JSON.stringify(draft));
         }
     }
 })

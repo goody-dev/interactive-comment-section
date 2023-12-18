@@ -3,25 +3,24 @@ import MinuIcon from '../assets/images/icon-minus.svg';
 import { useState, useEffect } from 'react';
 
 const Rating = ({rating, onRate, id}) => {
+    //localStorage.clear();
     const [score, setScore] = useState(rating);
-    const [negativelyRated, setNegativelyRated] = useState(false);
-    const [positivelyRated, setPositivelyRated] = useState(false);
-
-    const activate = ()  => {
-        
-    }
+    const [negativelyRated, setNegativelyRated] = useState(JSON.parse(localStorage.getItem(`ngtvlyRated${id}`)) || false);
+    const [positivelyRated, setPositivelyRated] = useState(JSON.parse(localStorage.getItem(`pstvlyRated${id}`)) || false);
 
     //To handle positive rating and remove prior negative rating
     const handlePositiveRating = (event) => {
         if(!positivelyRated && !negativelyRated) {
             setScore(score+1);
             setPositivelyRated(true);
+            localStorage.setItem(`pstvlyRated${id}`, JSON.stringify(true));
             setNegativelyRated(false);
+            localStorage.setItem(`ngtvlyRated${id}`, JSON.stringify(false));
         } else if (positivelyRated) {
             setScore(score-1);
             setPositivelyRated(false);
+            localStorage.setItem(`pstvlyRated${id}`, JSON.stringify(false));
         }
-        //console.log(event.target.attributes);
     }
 
     //To handle negative rating and remove prior positive rating
@@ -29,12 +28,14 @@ const Rating = ({rating, onRate, id}) => {
         if(!negativelyRated && !positivelyRated) {
             setScore(score-1);
             setNegativelyRated(true);
+            localStorage.setItem(`ngtvlyRated${id}`, JSON.stringify(true));
             setPositivelyRated(false);
+            localStorage.setItem(`pstvlyRated${id}`, JSON.stringify(false));
         } else if (negativelyRated) {
             setScore(score+1);
             setNegativelyRated(false);
+            localStorage.setItem(`ngtvlyRated${id}`, JSON.stringify(false));
         }
-        //console.log(event.target.svg.attributes);
     }
 
     //To update state(single source of truth) immediately
