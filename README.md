@@ -83,12 +83,12 @@ I would like to improve my problem solving skills and build more complex compone
 ### Useful resources
 
 - [React Documentation](https://www.react.dev) - I worked with the react documentation while building, it helped better my understanding of some concepts.
-- [Tailwind Documentation](https://www.tailwindcss.com) - I used it in learning styling based on variables, or conditional tailwind styling if you will.
+- [Tailwind Documentation](https://www.tailwindcss.com) - I used it in learning styling based on variables or conditional tailwind styling, if you will.
 
 ## Author
 
 - Website - [Goodness Okanlawon](https://www.goodness.vercel.app)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
+- Frontend Mentor - [@CodeEvolver](https://www.frontendmentor.io/profile/CodeEvolver)
 - Twitter - [@goody_dev](https://www.twitter.com/goody_dev)
 
 ## Acknowledgments
