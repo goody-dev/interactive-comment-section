@@ -42,10 +42,10 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
                 <div className='flex flex-row justify-between items-center'>
                     <Rating rating={comment.score} onRate={handleRating} id={comment.id}/>
                     {currentUser.username !== comment.user.username?
-                    <ReplyButton onClickReply={handleReplyEditor} id={comment.id}/>:
+                    <ReplyButton onClickReply={handleReplyEditor} id={comment.id} replyEditorVisibility={replyEditorVisibility} focusCommentId={focusCommentId}/>:
                     <div className='flex flex-row justify-center items-center'>
                         <DeleteButton id={comment.id} onDelete={(visibility, id)=>handleDeleteCard(visibility, id)}/>
-                        <EditButton onClickEdit={handleEditEditor} id={comment.id} />
+                        <EditButton onClickEdit={handleEditEditor} id={comment.id} focusCommentId={focusCommentId} editMode={editMode} />
                     </div>}
                 </div>
             </div>
@@ -62,10 +62,10 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
                             <p className="text-grayish-blue font-[400]"><Timestamp relative date={comment.createdAt}  autoUpdate/></p>
                         </div>
                         {currentUser.username !== comment.user.username?
-                        <ReplyButton onClickReply={handleReplyEditor} id={comment.id}/>:
+                        <ReplyButton onClickReply={handleReplyEditor} id={comment.id} replyEditorVisibility={replyEditorVisibility} focusCommentId={focusCommentId}/>:
                         <div className='flex flex-row justify-center items-center'>
                             <DeleteButton id={comment.id} onDelete={(visibility, id)=>handleDeleteCard(visibility, id)}/>
-                            <EditButton onClickEdit={handleEditEditor} id={comment.id} />
+                            <EditButton onClickEdit={handleEditEditor} id={comment.id}  focusCommentId={focusCommentId} editMode={editMode} />
                         </div>}
                     </div>
                     <div>
