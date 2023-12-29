@@ -31,7 +31,7 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
             <div className='flex flex-col' style={{marginBottom: (comment.replies && comment.replies[0])?  "0.75rem": 0, gap: (replyEditorVisibility===true && focusCommentId===comment.id)? "0.325rem": 0}}>
             <div className="sm:hidden bg-white mx-auto min-w-[100%] max-w-[90vw] shadow-lg flex flex-col m-auto rounded p-5 gap-y-3">
                 <div className='flex w-fit space-x-4 content-center items-center'>
-                    <img src={comment.user.image.webp} className='h-6' alt="User Avatar" />
+                    <img src={comment.user.image.webp} className='h-6' alt={comment.user.name+"'s Avatar"} />
                     <p className="text-dark-blue font-[500]">{comment.user.username}</p>
                     {currentUser.username === comment.user.username && <YouTag/>}
                     <p className="text-grayish-blue font-[400]"><Timestamp relative date={comment.createdAt} autoUpdate/></p>
@@ -56,7 +56,7 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
                 <div className='flex flex-col space-y-3 w-[100%]'>
                     <div className='flex flex-row justify-between items-center'>
                         <div className='flex w-fit space-x-3 content-center items-center'>
-                            <img src={comment.user.image.webp} className='h-6' alt="User Avatar" />
+                            <img src={comment.user.image.webp} className='h-6' alt={currentUser.username === comment.user.username? "Your Avatar": comment.user.name+"'s Avatar"} />
                             <p className="text-dark-blue font-[500]">{comment.user.username}</p>
                             {currentUser.username === comment.user.username && <YouTag/>}
                             <p className="text-grayish-blue font-[400]"><Timestamp relative date={comment.createdAt}  autoUpdate/></p>

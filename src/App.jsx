@@ -10,7 +10,7 @@ import { produce } from 'immer';
 import { comment } from 'postcss';
 
 function App() {
-    //localStorage.clear();
+    localStorage.clear();
     let data = JSON.parse(localStorage.getItem('Data')) || Data;
     const [commentbase, dispatch] = useReducer(commentReducer, data);
     const [lastAssignedId, setLastAssignedId] = useState(4); //to keep track of last assigned ids and reference it in setting the next comments id
