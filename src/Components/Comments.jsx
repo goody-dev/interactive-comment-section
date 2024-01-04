@@ -9,7 +9,7 @@ import ReplyEditor from './ReplyEditor.jsx';
 import EditEditor from './EditEditor.jsx';
 
 import {Children, React, useState} from 'react';
-
+import { useSpring, animated } from '@react-spring/web';
 
 const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDeleteCard, handleReplyComment, replyEditorVisibility, handleReplyEditor, handleEditEditor, editMode, handleUpdateComment}) => {
   useState(()=> {
@@ -24,12 +24,23 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
       } 
   }, [comments]) //sorts comments when there are changes in comment base
 
+  const commentCardAnimation = useSpring({
+    from: {
+         opacity: 0,
+         x:"-10vw",
+    },
+    to: {
+        opacity: 1,
+        x:"0vw",
+    },
+  })
+
   return (
     <div className='flex flex-col gap-3 w-fit sm:w-[70vw] mx-auto' style={{paddingTop:!comments[0].replyingTo && "1.25rem"}}> 
         {comments.map((comment, id) => 
         <div key={comment.id} className='flex flex-col w-[100%]' style={{/*gap:(comment.replies && comment.replies[0])? "0.75rem": 0*/}}>
             <div className='flex flex-col' style={{marginBottom: (comment.replies && comment.replies[0])?  "0.75rem": 0, gap: (replyEditorVisibility===true && focusCommentId===comment.id)? "0.325rem": 0}}>
-            <div className="sm:hidden bg-white mx-auto min-w-[100%] max-w-[90vw] shadow-lg flex flex-col m-auto rounded p-5 gap-y-3">
+            <animated.div style={{...commentCardAnimation}} className="sm:hidden bg-white mx-auto min-w-[100%] max-w-[90vw] shadow-lg flex flex-col m-auto rounded p-5 gap-y-3">
                 <div className='flex w-fit space-x-4 content-center items-center'>
                     <img src={comment.user.image.webp} className='h-6' alt={comment.user.name+"'s Avatar"} />
                     <p className="text-dark-blue font-[500]">{comment.user.username}</p>
@@ -48,8 +59,8 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
                         <EditButton onClickEdit={handleEditEditor} id={comment.id} focusCommentId={focusCommentId} editMode={editMode} />
                     </div>}
                 </div>
-            </div>
-            <div className="hidden sm:flex bg-white sm:flex-row mx-auto sm:max-w-xl sm:w-[100%] sm:align-top sm:space-x-4 shadow-lg rounded p-5 gap-y-4">
+            </animated.div>
+            <animated.div style={{...commentCardAnimation}}className="hidden sm:flex bg-white sm:flex-row mx-auto sm:max-w-xl sm:w-[100%] sm:align-top sm:space-x-4 shadow-lg rounded p-5 gap-y-4">
                 <div className='sm:block w-fit space-x-4'>
                     <Rating rating={comment.score} onRate={handleRating} id={comment.id}/>
                 </div>
@@ -72,7 +83,7 @@ const Comments = ({comments, currentUser, focusCommentId, handleRating, handleDe
                     {editMode === true && comment.id === focusCommentId? <EditEditor onUpdate={handleUpdateComment} comment={comment.content} handleEditEditor={handleEditEditor} commentId={comment.id} replyingTo={comment.replyingTo}/>: <p className='content text-grayish-blue break-words font-[400]'>{comment.replyingTo && <span className="text-moderate-blue font-[500]">@{comment.replyingTo}</span>}{comment.content}</p>}
                     </div>
                 </div>
-            </div>
+            </animated.div>
             <div> 
                 {(replyEditorVisibility === true && focusCommentId === comment.id) && <ReplyEditor key={comment.id} replyingTo={comment.user.username} parentId={comment.id} user={currentUser} onReply={handleReplyComment} handleReplyEditor={handleReplyEditor}/>}
             </div>
